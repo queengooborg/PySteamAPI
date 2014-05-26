@@ -1,0 +1,4 @@
+steam_appid.txt
+build/*
+steam/*
+*.o
