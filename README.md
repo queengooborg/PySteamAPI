@@ -5,7 +5,7 @@ Steam API written to work as a Python module
 
 ==========
 
-INSTRUCTIONS
+> INSTRUCTIONS
 
 1. First, you must have a Steamworks account set up at https://partner.steamgames.com/
 2. Download the SDK somewhere on your drive
@@ -15,6 +15,6 @@ INSTRUCTIONS
 
 ==========
 
-NOTES
+> NOTES
 
 This module has been tested on Mac only.  It will soon be tested on Windows and Linux.
