@@ -15,12 +15,13 @@
 #include <iostream>
 
 static PyObject *steam_init(PyObject *self, PyObject *args);
+static PyObject *steam_shutdown(PyObject *self, PyObject *args);
 static PyObject *steam_get_name(PyObject *self, PyObject *args);
 static PyObject *SteamInitError;
 
 static PyMethodDef module_methods[] = {
-    { "func", NULL, METH_NOARGS, NULL },
     { "init", steam_init, METH_NOARGS, NULL },
+    { "shutdown", steam_shutdown, METH_NOARGS, NULL },
     { "getName", steam_get_name, METH_NOARGS, NULL },
     { NULL, NULL, 0, NULL }
 };
@@ -31,11 +32,15 @@ static PyObject *steam_init(PyObject *self, PyObject *args) {
 		Py_RETURN_NONE;
 	}
 	else {
-		//PyErr_SetString(SteamInitError, "Steam initialization failed!  Either Steam is not running or steam_appid.txt is not in your root folder.");
+		PyErr_SetString(SteamInitError, "Steam initialization failed!  Either Steam is not running or steam_appid.txt is not in your root folder.");
 		Py_RETURN_NONE;
 	};
 };
 
+static PyObject *steam_shutdown(PyObject *self, PyObject *args){
+	SteamAPI_Shutdown();
+	Py_RETURN_NONE;
+}
 
 static PyObject *steam_get_name(PyObject *self, PyObject *args){
 	const char *playerName = SteamFriends()->GetPersonaName();
@@ -43,10 +48,14 @@ static PyObject *steam_get_name(PyObject *self, PyObject *args){
 };
 
 PyMODINIT_FUNC initPySteamAPI() {
-    Py_InitModule3("PySteamAPI", module_methods, "Simply initialize the Steam API.");
+	PyObject *m;
 
-    /*SteamInitError = PyErr_NewException("Steam.InitError", NULL, NULL);
+    m = Py_InitModule3("PySteamAPI", module_methods, "Simply initialize the Steam API.");
+
+    if (m == NULL) return;
+
+    SteamInitError = PyErr_NewException("Steam.InitError", NULL, NULL);
     Py_INCREF(SteamInitError);
-    PyModule_AddObject("error", SteamInitError);*/
+    PyModule_AddObject(m, "error", SteamInitError);
 }
 

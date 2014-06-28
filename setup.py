@@ -2,8 +2,8 @@ from distutils.core import setup, Extension
 
 extensions = [Extension('PySteamAPI',
 				include_dirs = ['/usr/local/include'],
-				libraries = ['steam_api'],
 				library_dirs = ['/usr/local/lib'],
+				libraries = ['steam_api'],
 				sources = ['steam.cpp'])
 			]
 
